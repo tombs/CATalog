@@ -9,15 +9,16 @@ import Card from 'react-bootstrap/Card'
 import Button from 'react-bootstrap/Button'
 
 const sampleStyle = {
-    minWidth: "15%",
-    flexGrow: 0
+    minWidth: "20%",
+    flexGrow: 0,
+    marginBottom: "20px"
   };
 
 const buttonStyle = {
-    width: "32%",
+    width: "10%",
 };
 
-const sampleNumberOfCards = 5;
+const sampleNumberOfCards = 15;
 
 class HomePage extends React.Component {
     constructor(props) {
@@ -65,22 +66,21 @@ class HomePage extends React.Component {
                     </Form.Control>
                 </Form.Group>
             </Form>
-            <CardColumns>
-            {[...Array(sampleNumberOfCards)].map((value) => {
-                return (
-                <Card style={sampleStyle}>
-                    <Card.Img variant="top" src="https://via.placeholder.com/300x300" />
-                    <Card.Body>
-                    <Card.Title>Sample Title</Card.Title>
-                    </Card.Body>
-                    <Card.Footer>
-                    <small className="text-muted">Sample Rating</small>
-                    </Card.Footer>
-                </Card>
-                );
-            })}
-            </CardColumns>
-
+            <CardDeck>
+      {[...Array(sampleNumberOfCards)].map((value) => {
+        return (
+          <Card style={sampleStyle}>
+            <Card.Img variant="top" src="https://via.placeholder.com/300x300" />
+            <Card.Body>
+              <Card.Title>Sample Title</Card.Title>
+            </Card.Body>
+            <Card.Footer>
+              <small className="text-muted">Sample Rating</small>
+            </Card.Footer>
+          </Card>
+        );
+      })}
+    </CardDeck>
 
             <Button variant="primary" size="lg" active>
                 Load More
