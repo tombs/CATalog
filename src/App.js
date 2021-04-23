@@ -1,6 +1,6 @@
 // CSS
-import './App.css';
-
+//import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 // React Router DOM
 import {
   BrowserRouter as Router,
