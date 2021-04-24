@@ -6,7 +6,7 @@ function simulateNetworkRequest() {
     return new Promise((resolve) => setTimeout(resolve, 2000));
   }
   
-function LoadingButton(networkRequest) {
+function LoadingButton(props) {
 const [isLoading, setLoading] = useState(false);
 
 useEffect(() => {
@@ -17,7 +17,8 @@ useEffect(() => {
     }
 }, [isLoading]);
 
-const handleClick = () => setLoading(true);
+// const handleClick = () => setLoading(true);
+const handleClick = () => props.getCats();
 
 return (
     <Button
