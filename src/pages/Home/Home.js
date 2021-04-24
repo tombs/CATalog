@@ -2,7 +2,7 @@ import React from 'react';
 
 // Fetch data function (axios)
 import { getAllBreeds, getCatPicturesFromBreed } from 'scripts/dataFetch';
-import { BREED_URL, CAT_IMAGES_URL } from 'apiConstants';
+import { BREEDS_URL, CAT_BREED_IMAGES_URL } from 'apiConstants';
 
 // React Bootstrap Components
 import Form from 'react-bootstrap/Form';
@@ -34,7 +34,7 @@ class HomePage extends React.Component {
       }
 
     componentDidMount() {
-        getAllBreeds(BREED_URL).then(response => {                
+        getAllBreeds(BREEDS_URL).then(response => {                
                 this.setState({
                     catBreeds: response
                 })
@@ -47,7 +47,7 @@ class HomePage extends React.Component {
         console.log("EVENT: "+event);
         console.log("VALUE: "+event.target.value);
         this.resetImages()
-        getCatPicturesFromBreed(CAT_IMAGES_URL,1,10,event.target.value)
+        getCatPicturesFromBreed(CAT_BREED_IMAGES_URL,1,10,event.target.value)
         .then(response => {
             console.log("response: "+JSON.stringify(response));
             this.setState({
