@@ -8,7 +8,6 @@ import { CAT_DETAILS_URL } from 'apiConstants';
 
 // React Bootstrap Components
 import Container from 'react-bootstrap/Container';
-import Jumbotron from 'react-bootstrap/Jumbotron';
 import Card from 'react-bootstrap/Card'
 import Button from 'react-bootstrap/Button'
 
