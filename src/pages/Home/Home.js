@@ -23,14 +23,25 @@ class HomePage extends React.Component {
         super(props);
         this.state = {
             catBreeds: [],
-            catBreedPics: [],
+            catBreedPics: [], // cat pic objects for display
+            fetchedPics:[], // latest fetched cat pic objects, which could include old cat pics
+            // newPics:[], // all pic objects from latest fetched pics that are not duplicates
+            currentPics:[], // list of id's of all currently displayed cat pics
             currentBreed: null,
             allCatsLoadad: false,
+            currentPage: 1,
+            totalCats: 0,
+            limitCount: 10,
         };
+        this.getMoreCats = this.getMoreCats.bind(this);
     
       }
 
     componentDidMount() {
+        const {
+            currentPage,
+            limitCount
+        } = this.state;
         const queryString = this.props.location.search;
         let searchParams = new URLSearchParams(queryString);
         const breedId = searchParams.get('breed');
@@ -44,38 +55,131 @@ class HomePage extends React.Component {
         );
 
         if (breedId) {
-            getCatPicturesFromBreed(CAT_BREED_IMAGES_URL,1,10,breedId)
+            getCatPicturesFromBreed(CAT_BREED_IMAGES_URL,currentPage,limitCount,breedId)
             .then(response => {
                 console.log("response: "+JSON.stringify(response));
-                this.setState({
-                    catBreedPics: response,
-                    currentBreed: breedId
-                })
+                this.setState(
+                        (state) => ({
+                            currentPage: state.currentPage + 1,
+                            fetchedPics: response,
+                            currentBreed: breedId
+                        }),
+                        () => {
+                            console.log("CALLBACK!!!");
+                            this.processCatPicID(response);
+                        }
+                        )
             });    
         }
 
     }
 
+    processCatPicID(catPicList) {
+        console.log("PROCESSING CATS!");
+        const {
+            currentPics
+        } = this.state;
+
+        let tempPicsList = [];
+        let tempNewPicsObjects = []
+        let newPicCounter = 0;
+
+        catPicList.map(
+            catObj => {
+                if (currentPics.indexOf(catObj.id) === -1 ){
+                    tempPicsList.push(catObj.id);
+                    tempNewPicsObjects.push(catObj);
+                    newPicCounter+=1;
+                }
+            }
+        )
+
+
+        if (newPicCounter > 0) {
+            this.setState(
+                (state) => ({
+                    currentPics: state.currentPics.concat(tempPicsList),
+                    catBreedPics: state.catBreedPics.concat(tempNewPicsObjects),
+                    // newPics: state.newPics.concat(tempNewPicsObjects);
+                })
+                )
+
+        }
+        else {
+            this.setState({
+                allCatsLoadad: true
+            })
+        }
+
+    }
+
+    getMoreCats() {
+        const {
+            currentPage,
+            limitCount, 
+            currentBreed
+        } = this.state;
+
+        getCatPicturesFromBreed(CAT_BREED_IMAGES_URL,currentPage,limitCount,currentBreed)
+        .then(response => {
+            console.log("response: "+JSON.stringify(response));
+            this.setState(
+                (state) => ({
+                    currentPage: state.currentPage + 1,
+                    fetchedPics: response,
+                }),
+                () => {
+                    console.log("CALLBACK!!! MORE CATS");
+                    this.processCatPicID(response);
+                }
+                )
+        });    
+    }
+
     handleChange(event, value) {
+        const {
+            currentPage,
+            limitCount
+        } = this.state;
+
         console.log("EVENT: "+event);
         console.log("VALUE: "+event.target.value);
         this.setState({
             currentBreed: event.target.value
         })
+        
         this.resetImages()
-        getCatPicturesFromBreed(CAT_BREED_IMAGES_URL,1,10,event.target.value)
+        
+        if (event.target.value === 'Select Breed') {
+            return;
+        }
+
+        getCatPicturesFromBreed(CAT_BREED_IMAGES_URL,currentPage,limitCount,event.target.value)
         .then(response => {
-            console.log("response: "+JSON.stringify(response));
-            this.setState({
-                catBreedPics: response
-            })
+            console.log("CHANGE response: "+JSON.stringify(response));
+            this.setState(
+                (state) => ({
+                    currentPage: state.currentPage + 1,
+                    fetchedPics: response,
+                }),
+                () => {
+                    console.log("CALLBACK!!!");
+                    this.processCatPicID(response);
+                }
+                )
+                
         });
     }
 
     // Remove images (reset state) when there is a change in breed selection
     resetImages() {
         this.setState({
-            catBreedPics : []
+            catBreedPics : [],
+            totalCats: 0,
+            currentPage: 1,
+            currentPics: [],
+            allCatsLoadad: false,
+            fetchedPics: []
         })
     }
 
@@ -116,14 +220,14 @@ class HomePage extends React.Component {
             <CardDeck>
       {catBreedPics.length > 0 && catBreedPics.map((cat) => {
         return (
-            <CatCard picture={cat.url} catId={cat.id} />
+            <CatCard picture={cat.url} catId={cat.id} key={cat.id} />
         );
       })}      
     </CardDeck>
     { catBreedPics.length === 0 && (<h5>No Cats Available</h5>)}
 
 
-        { !allCatsLoadad &&  (<LoadingButton networkRequest=""/>) }
+        { !allCatsLoadad &&  (<LoadingButton getCats={this.getMoreCats} />) }
 
 
         </Container>
