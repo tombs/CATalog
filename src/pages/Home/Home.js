@@ -27,13 +27,18 @@ class HomePage extends React.Component {
         this.state = {
             catBreeds: [],
             catBreedPics: [],
-            currentBreed: '',
+            currentBreed: null,
             allCatsLoadad: false,
         };
     
       }
 
     componentDidMount() {
+        const queryString = this.props.location.search;
+        let searchParams = new URLSearchParams(queryString);
+        const breedId = searchParams.get('breed');
+        console.log("breedId: "+breedId);
+
         getAllBreeds(BREEDS_URL).then(response => {                
                 this.setState({
                     catBreeds: response
@@ -41,11 +46,25 @@ class HomePage extends React.Component {
               }
         );
 
+        if (breedId) {
+            getCatPicturesFromBreed(CAT_BREED_IMAGES_URL,1,10,breedId)
+            .then(response => {
+                console.log("response: "+JSON.stringify(response));
+                this.setState({
+                    catBreedPics: response,
+                    currentBreed: breedId
+                })
+            });    
+        }
+
     }
 
     handleChange(event, value) {
         console.log("EVENT: "+event);
         console.log("VALUE: "+event.target.value);
+        this.setState({
+            currentBreed: event.target.value
+        })
         this.resetImages()
         getCatPicturesFromBreed(CAT_BREED_IMAGES_URL,1,10,event.target.value)
         .then(response => {
@@ -69,6 +88,7 @@ class HomePage extends React.Component {
             catBreeds,
             allCatsLoadad,
             catBreedPics,
+            currentBreed,
         } = this.state;
 
         console.log("catBreeds: "+JSON.stringify(catBreeds));
@@ -88,7 +108,7 @@ class HomePage extends React.Component {
             <h4>Breed</h4>
             <Form>
                 <Form.Group controlId="exampleForm.SelectCustom">                    
-                    <Form.Control style={buttonStyle} as="select" custom onChange={(e, value)=>this.handleChange(e, value)}>
+                    <Form.Control style={buttonStyle} as="select" value={currentBreed?currentBreed:null} custom onChange={(e, value)=>this.handleChange(e, value)}>
                         <option key="breed" >Select Breed</option>
                         {catBreeds.map((breed) => (
                             <option key={breed.id} value={breed.id}>{breed.name}</option>
