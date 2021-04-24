@@ -2,13 +2,14 @@ import React from 'react';
 import { getBreeds } from 'scripts/dataFetch';
 import { BREED_URL } from 'apiConstants';
 
-import Form from 'react-bootstrap/Form'
-import CardDeck from 'react-bootstrap/CardDeck'
-import CardColumns from 'react-bootstrap/CardColumns'
-import Card from 'react-bootstrap/Card'
-import Button from 'react-bootstrap/Button'
+import Form from 'react-bootstrap/Form';
+import CardDeck from 'react-bootstrap/CardDeck';
+import CardColumns from 'react-bootstrap/CardColumns';
+import Card from 'react-bootstrap/Card';
 
-import CatCard from 'components/Card'
+
+import CatCard from 'components/Card';
+import LoadingButton from 'components/LoadButton';
 
 const sampleStyle = {
     minWidth: "20%",
@@ -28,6 +29,7 @@ class HomePage extends React.Component {
         this.state = {
             catBreeds: [],
             currentBreed: '',
+            allCatsLoadad: false,
         };
     
       }
@@ -51,6 +53,7 @@ class HomePage extends React.Component {
     render() {
         const {
             catBreeds,
+            allCatsLoadad,
         } = this.state;
         console.log("catBreeds: "+JSON.stringify(this.state.catBreeds));
       return (
@@ -76,9 +79,7 @@ class HomePage extends React.Component {
       })}
     </CardDeck>
 
-            <Button variant="primary" size="lg" active>
-                Load More
-            </Button>{' '}
+        { !allCatsLoadad &&  (<LoadingButton networkRequest=""/>) }
 
 
         </div>
