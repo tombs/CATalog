@@ -22,7 +22,7 @@ export async function getAllBreeds(breedsUrl) {
  * @returns  {Promise} Query result for cat pictures of a breed
  */
 export async function getCatPicturesFromBreed(catImagesUrl, pageNumber, limit, breedId) {
-    const picsUrl = catImagesUrl + "?page=" + pageNumber + "&limit=" + limit + "&breed_id="+breedId;
+    const picsUrl = catImagesUrl + "page=" + pageNumber + "&limit=" + limit + "&breed_id="+breedId +"&order=asc";
     let results = await axios.get(picsUrl);
     const catImages = results.data;
     console.log("cat images: "+JSON.stringify(catImages));
