@@ -9,7 +9,8 @@ import {
 } from "react-router-dom";
 
 // Pages
-import HomePage from './pages/Home/Home'
+import HomePage from './pages/Home/Home';
+import DetailsPage from './pages/Detail/Detail';
 
 function App() {
   return (
@@ -24,9 +25,9 @@ function App() {
         */}
         <Switch>
           {/* HomePage route */}
-          <Route exact path="/">
-            <HomePage />
-          </Route>
+          <Route exact path="/" component={HomePage} />                      
+          <Route exact path="/:catId" component={DetailsPage} />
+
         </Switch>
       </div>
     </Router>
