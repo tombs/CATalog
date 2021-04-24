@@ -1,20 +1,31 @@
 import axios from 'axios';
-
-export async function getBreeds(breeds_url) {
-    let results = await axios.get(breeds_url);
+/**
+ * Get all breeds from https://docs.thecatapi.com/
+ * @param {string} breedsUrl API URL for breeds
+ * @returns {Promise} Query result for breeds
+ */
+export async function getAllBreeds(breedsUrl) {
+    let results = await axios.get(breedsUrl);
     const breeds = results.data;
     console.log("breeds: "+JSON.stringify(breeds));
     return breeds;
     
 }
 
-
-export async function getCatPictures(cat_images_url, page_number, limit, breed_id) {
-    const picsUrl = cat_images_url + "?page=" + page_number + "&limit=" + limit + "&breed_id="+breed_id;
+/**
+ * Get all cat pictures for a specific breed from https://docs.thecatapi.com/
+ * @param {string} catImagesUrl API URL for cat images
+ * @param {integer} pageNumber Page Number
+ * @param {integer} limit Number of images to return
+ * @param {string} breedId ID for the cat breed
+ * @returns  {Promise} Query result for cat pictures of a breed
+ */
+export async function getCatPicturesFromBreed(catImagesUrl, pageNumber, limit, breedId) {
+    const picsUrl = catImagesUrl + "?page=" + pageNumber + "&limit=" + limit + "&breed_id="+breedId;
     let results = await axios.get(picsUrl);
-    const cat_images = results.data;
-    console.log("cat images: "+JSON.stringify(cat_images));
-    return cat_images;
+    const catImages = results.data;
+    console.log("cat images: "+JSON.stringify(catImages));
+    return catImages;
 
 }
 
