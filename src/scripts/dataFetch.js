@@ -1,4 +1,5 @@
 import axios from 'axios';
+
 /**
  * Get all breeds from https://docs.thecatapi.com/
  * @param {string} breedsUrl API URL for breeds
@@ -14,7 +15,7 @@ export async function getAllBreeds(breedsUrl) {
 
 /**
  * Get all cat pictures for a specific breed from https://docs.thecatapi.com/
- * @param {string} catImagesUrl API URL for cat images
+ * @param {string} catImagesUrl API URL for cat breed images
  * @param {integer} pageNumber Page Number
  * @param {integer} limit Number of images to return
  * @param {string} breedId ID for the cat breed
@@ -29,4 +30,18 @@ export async function getCatPicturesFromBreed(catImagesUrl, pageNumber, limit, b
 
 }
 
+/**
+ * Get details about a specific cat from  from https://docs.thecatapi.com/
+ * @param {string} catDetailsUrl API Url for cat details
+ * @param {string} catId Specific cat ID
+ * @returns {Promise} Query result for cat details for a specific cat
+ */
+export async function getCatDetails(catDetailsUrl, catId) {
+    const detailsUrl = catDetailsUrl + catId;
+    let results = await axios.get(detailsUrl);
+    const catDetails = results.data;
+    console.log(" cat details: "+JSON.stringify(catDetails));
+    return catDetails;
+
+}
   
