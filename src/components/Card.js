@@ -22,7 +22,7 @@ class CatCard extends React.Component {
             <Card style={sampleStyle}>
             <Card.Img variant="top" src={this.props.picture} />
             <Card.Body>
-                <Button variant="primary" size="lg" active>
+                <Button variant="primary" size="lg" href={this.props.catId} active>
                     View Details
                 </Button>
             </Card.Body>
