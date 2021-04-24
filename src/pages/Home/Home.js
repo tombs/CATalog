@@ -1,5 +1,5 @@
 import React from 'react';
-import { getBreeds } from 'scripts/dataFetch';
+import { getAllBreeds } from 'scripts/dataFetch';
 import { BREED_URL } from 'apiConstants';
 
 import Form from 'react-bootstrap/Form';
@@ -35,7 +35,7 @@ class HomePage extends React.Component {
       }
 
     componentDidMount() {
-        getBreeds(BREED_URL).then(response => {                
+        getAllBreeds(BREED_URL).then(response => {                
                 this.setState({
                     catBreeds: response
                 })
