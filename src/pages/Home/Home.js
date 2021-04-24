@@ -8,7 +8,6 @@ import { BREEDS_URL, CAT_BREED_IMAGES_URL } from 'apiConstants';
 import Form from 'react-bootstrap/Form';
 import CardDeck from 'react-bootstrap/CardDeck';
 import Container from 'react-bootstrap/Container'
-import Image from 'react-bootstrap/Image'
 import Figure from 'react-bootstrap/Figure'
 
 // Custom Components
@@ -108,7 +107,7 @@ class HomePage extends React.Component {
             <h4>Breed</h4>
             <Form>
                 <Form.Group controlId="exampleForm.SelectCustom">                    
-                    <Form.Control style={buttonStyle} as="select" value={currentBreed?currentBreed:null} custom onChange={(e, value)=>this.handleChange(e, value)}>
+                    <Form.Control style={buttonStyle} as="select" value={currentBreed?currentBreed:''} custom onChange={(e, value)=>this.handleChange(e, value)}>
                         <option key="breed" >Select Breed</option>
                         {catBreeds.map((breed) => (
                             <option key={breed.id} value={breed.id}>{breed.name}</option>
