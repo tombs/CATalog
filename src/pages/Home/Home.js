@@ -1,24 +1,22 @@
 import React from 'react';
-import { getAllBreeds } from 'scripts/dataFetch';
-import { BREED_URL } from 'apiConstants';
 
+// Fetch data function (axios)
+import { getAllBreeds, getCatPicturesFromBreed } from 'scripts/dataFetch';
+import { BREED_URL, CAT_IMAGES_URL } from 'apiConstants';
+
+// React Bootstrap Components
 import Form from 'react-bootstrap/Form';
 import CardDeck from 'react-bootstrap/CardDeck';
-import CardColumns from 'react-bootstrap/CardColumns';
-import Card from 'react-bootstrap/Card';
+import Container from 'react-bootstrap/Container'
+import Image from 'react-bootstrap/Image'
+import Figure from 'react-bootstrap/Figure'
 
-
+// Custom Components
 import CatCard from 'components/Card';
 import LoadingButton from 'components/LoadButton';
 
-const sampleStyle = {
-    minWidth: "20%",
-    flexGrow: 0,
-    marginBottom: "20px"
-  };
-
 const buttonStyle = {
-    width: "10%",
+    width: "20%",
 };
 
 const sampleNumberOfCards = 15;
@@ -28,6 +26,7 @@ class HomePage extends React.Component {
         super(props);
         this.state = {
             catBreeds: [],
+            catBreedPics: [],
             currentBreed: '',
             allCatsLoadad: false,
         };
@@ -47,6 +46,21 @@ class HomePage extends React.Component {
     handleChange(event, value) {
         console.log("EVENT: "+event);
         console.log("VALUE: "+event.target.value);
+        this.resetImages()
+        getCatPicturesFromBreed(CAT_IMAGES_URL,1,10,event.target.value)
+        .then(response => {
+            console.log("response: "+JSON.stringify(response));
+            this.setState({
+                catBreedPics: response
+            })
+        });
+    }
+
+    // Remove images (reset state) when there is a change in breed selection
+    resetImages() {
+        this.setState({
+            catBreedPics : []
+        })
     }
 
       
@@ -54,11 +68,22 @@ class HomePage extends React.Component {
         const {
             catBreeds,
             allCatsLoadad,
+            catBreedPics,
         } = this.state;
-        console.log("catBreeds: "+JSON.stringify(this.state.catBreeds));
+
+        console.log("catBreeds: "+JSON.stringify(catBreeds));
+        console.log("catBreedPics: "+JSON.stringify(catBreedPics));
       return (
-          <div>
-            <h1>CAT-alogue!!</h1>
+          <Container>
+            <h1>CAT-alogue</h1>
+            <Figure>
+                <Figure.Image
+                    width={60}
+                    height={60}
+                    alt="40x40"
+                    src="https://cdn.pixabay.com/photo/2016/03/31/18/10/cat-1294175__340.png"
+                />
+            </Figure>
 
             <h4>Breed</h4>
             <Form>
@@ -72,17 +97,19 @@ class HomePage extends React.Component {
                 </Form.Group>
             </Form>
             <CardDeck>
-      {[...Array(sampleNumberOfCards)].map((value) => {
+      {catBreedPics.length > 0 && catBreedPics.map((cat) => {
         return (
-          <CatCard picture="https://via.placeholder.com/300x300" catId="" />
+            <CatCard picture={cat.url} catId={cat.id} />
         );
-      })}
+      })}      
     </CardDeck>
+    { catBreedPics.length === 0 && (<h5>No Cats Available</h5>)}
+
 
         { !allCatsLoadad &&  (<LoadingButton networkRequest=""/>) }
 
 
-        </div>
+        </Container>
         );
     }
   }
