@@ -18,8 +18,6 @@ const buttonStyle = {
     width: "20%",
 };
 
-const sampleNumberOfCards = 15;
-
 class HomePage extends React.Component {
     constructor(props) {
         super(props);
