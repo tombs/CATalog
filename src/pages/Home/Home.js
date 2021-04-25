@@ -227,7 +227,7 @@ class HomePage extends React.Component {
     { catBreedPics.length === 0 && (<h5>No Cats Available</h5>)}
 
 
-        { !allCatsLoadad &&  (<LoadingButton getCats={this.getMoreCats} />) }
+        { !allCatsLoadad &&  (<LoadingButton noCats={catBreedPics.length===0?true:false} getCats={this.getMoreCats} />) }
 
 
         </Container>
