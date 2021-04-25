@@ -10,15 +10,20 @@ function LoadingButton(props) {
 const [isLoading, setLoading] = useState(false);
 
 useEffect(() => {
-    if (isLoading) {
-    simulateNetworkRequest().then(() => {
+    if (props.isCatLoading===false) {
         setLoading(false);
-    });
+    }
+  },[props.isCatLoading]);
+
+
+useEffect(() => {
+    if (isLoading) {
+        props.getCats();
     }
 }, [isLoading]);
 
-// const handleClick = () => setLoading(true);
-const handleClick = () => props.getCats();
+ const handleClick = () => setLoading(true);
+//const handleClick = () => props.getCats();
 
 return (
     <Button
