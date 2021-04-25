@@ -24,7 +24,7 @@ return (
     <Button
     variant="primary"
     size="lg"
-    disabled={isLoading}
+    disabled={isLoading||props.noCats}
     onClick={!isLoading ? handleClick : null}
     >
     {isLoading ? 'Loading Cats…' : 'Load More'}
