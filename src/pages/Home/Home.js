@@ -32,6 +32,7 @@ class HomePage extends React.Component {
             currentPage: 1,
             totalCats: 0,
             limitCount: 10,
+            isLoading: false,
         };
         this.getMoreCats = this.getMoreCats.bind(this);
     
@@ -120,6 +121,10 @@ class HomePage extends React.Component {
             currentBreed
         } = this.state;
 
+        this.setState({
+            isLoading: true
+        });
+
         getCatPicturesFromBreed(CAT_BREED_IMAGES_URL,currentPage,limitCount,currentBreed)
         .then(response => {
             console.log("response: "+JSON.stringify(response));
@@ -127,6 +132,7 @@ class HomePage extends React.Component {
                 (state) => ({
                     currentPage: state.currentPage + 1,
                     fetchedPics: response,
+                    isLoading: false,
                 }),
                 () => {
                     console.log("CALLBACK!!! MORE CATS");
@@ -190,6 +196,7 @@ class HomePage extends React.Component {
             allCatsLoadad,
             catBreedPics,
             currentBreed,
+            isLoading,
         } = this.state;
 
         console.log("catBreeds: "+JSON.stringify(catBreeds));
@@ -227,7 +234,7 @@ class HomePage extends React.Component {
     { catBreedPics.length === 0 && (<h5>No Cats Available</h5>)}
 
 
-        { !allCatsLoadad &&  (<LoadingButton noCats={catBreedPics.length===0?true:false} getCats={this.getMoreCats} />) }
+        { !allCatsLoadad &&  (<LoadingButton isCatLoading={isLoading    } noCats={catBreedPics.length===0?true:false} getCats={this.getMoreCats} />) }
 
 
         </Container>
