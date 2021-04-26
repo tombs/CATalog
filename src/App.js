@@ -1,18 +1,18 @@
 // CSS
-//import './App.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/css/bootstrap.min.css'
 // React Router DOM
+import React from 'react'
 import {
   BrowserRouter as Router,
   Switch,
-  Route,
-} from "react-router-dom";
+  Route
+} from 'react-router-dom'
 
 // Pages
-import HomePage from './pages/Home/Home';
-import DetailsPage from './pages/Detail/Detail';
+import HomePage from './pages/Home/Home'
+import DetailsPage from './pages/Detail/Detail'
 
-function App() {
+function App () {
   return (
     <Router>
       <div>
@@ -25,13 +25,13 @@ function App() {
         */}
         <Switch>
           {/* HomePage route */}
-          <Route exact path="/" component={HomePage} />                      
+          <Route exact path="/" component={HomePage} />
           <Route exact path="/:catId" component={DetailsPage} />
 
         </Switch>
       </div>
     </Router>
-  );
+  )
 }
 
-export default App;
+export default App
