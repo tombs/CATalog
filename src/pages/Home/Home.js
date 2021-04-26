@@ -239,12 +239,12 @@ class HomePage extends React.Component {
     } = this.state
 
     return (
-          <Container>            
-              <div class="row text-center">
-                <div class="col-md-4">
+          <Container>
+              <div className="row text-center">
+                <div className="col-md-4">
                   <h1>CAT-alogue</h1>
                 </div>
-                <div class="col-md-2">
+                <div className="col-md-2">
                   <Figure>
                       <Figure.Image
                           width={60}
