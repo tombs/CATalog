@@ -1,40 +1,41 @@
-import { useState, useEffect } from 'react';
-
+import React, { useState, useEffect } from 'react'
+import PropTypes from 'prop-types'
 import Button from 'react-bootstrap/Button'
 
-function simulateNetworkRequest() {
-    return new Promise((resolve) => setTimeout(resolve, 2000));
-  }
-  
-function LoadingButton(props) {
-const [isLoading, setLoading] = useState(false);
+function LoadingButton (props) {
+  const [isLoading, setLoading] = useState(false)
 
-useEffect(() => {
-    if (props.isCatLoading===false) {
-        setLoading(false);
+  useEffect(() => {
+    if (props.isCatLoading === false) {
+      setLoading(false)
     }
-  },[props.isCatLoading]);
+  }, [props.isCatLoading])
 
-
-useEffect(() => {
+  useEffect(() => {
     if (isLoading) {
-        props.getCats();
+      props.getCats()
     }
-}, [isLoading]);
+  }, [isLoading])
 
- const handleClick = () => setLoading(true);
-//const handleClick = () => props.getCats();
+  const handleClick = () => setLoading(true)
 
-return (
+  return (
     <Button
     variant="primary"
     size="lg"
-    disabled={isLoading||props.noCats}
+    disabled={isLoading || props.noCats}
     onClick={!isLoading ? handleClick : null}
     >
     {isLoading ? 'Loading Cats…' : 'Load More'}
     </Button>
-);
+  )
 }
 
-export default LoadingButton;
+// Props validation
+LoadingButton.propTypes = {
+  isCatLoading: PropTypes.bool,
+  noCats: PropTypes.bool,
+  getCats: PropTypes.func
+}
+
+export default LoadingButton
