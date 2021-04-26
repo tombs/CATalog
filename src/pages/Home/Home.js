@@ -239,16 +239,22 @@ class HomePage extends React.Component {
     } = this.state
 
     return (
-          <Container>
-            <h1>CAT-alogue</h1>
-            <Figure>
-                <Figure.Image
-                    width={60}
-                    height={60}
-                    alt="40x40"
-                    src="https://cdn.pixabay.com/photo/2016/03/31/18/10/cat-1294175__340.png"
-                />
-            </Figure>
+          <Container>            
+              <div class="row text-center">
+                <div class="col-md-4">
+                  <h1>CAT-alogue</h1>
+                </div>
+                <div class="col-md-2">
+                  <Figure>
+                      <Figure.Image
+                          width={60}
+                          height={60}
+                          alt="40x40"
+                          src="https://cdn.pixabay.com/photo/2016/03/31/18/10/cat-1294175__340.png"
+                      />
+                  </Figure>
+                </div>
+            </div>
 
             <h4>Breed</h4>
             <Form>
