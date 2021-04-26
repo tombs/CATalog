@@ -12,6 +12,9 @@ import Container from 'react-bootstrap/Container'
 import Card from 'react-bootstrap/Card'
 import Button from 'react-bootstrap/Button'
 
+/**
+ *  This is the DetailsPage page component. It displays the specific cat details for a specific cat
+ */
 class DetailsPage extends React.Component {
   constructor (props) {
     super(props)
@@ -23,9 +26,11 @@ class DetailsPage extends React.Component {
   }
 
   componentDidMount () {
+    // Get catId from URL
     const { catId } = this.props.match.params
     console.log('search: ' + catId)
 
+    // Execute API to get cat details for catId
     getCatDetails(CAT_DETAILS_URL, catId).then(response => {
       this.setState({
         catDetailsResponse: response,
