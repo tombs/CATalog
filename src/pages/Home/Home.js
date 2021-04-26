@@ -33,7 +33,8 @@ class HomePage extends React.Component {
       currentPage: 1,
       totalCats: 0,
       limitCount: 10,
-      isLoading: false
+      isLoading: false,
+      isApiError: false
     }
     this.getMoreCats = this.getMoreCats.bind(this)
   }
@@ -54,6 +55,12 @@ class HomePage extends React.Component {
       })
     }
     )
+      .catch((error) => {
+        console.log('ERROR: ' + JSON.stringify(error))
+        this.setState({
+          isApiError: true
+        })
+      })
 
     if (breedId) {
       getCatPicturesFromBreed(CAT_BREED_IMAGES_URL, currentPage, limitCount, breedId)
@@ -70,6 +77,12 @@ class HomePage extends React.Component {
               this.processCatPicID(response)
             }
           )
+        })
+        .catch((error) => {
+          console.log('ERROR: ' + JSON.stringify(error))
+          this.setState({
+            isApiError: true
+          })
         })
     }
   }
@@ -135,6 +148,12 @@ class HomePage extends React.Component {
           }
         )
       })
+      .catch((error) => {
+        console.log('ERROR: ' + JSON.stringify(error))
+        this.setState({
+          isApiError: true
+        })
+      })
   }
 
   handleChange (event, value) {
@@ -169,6 +188,12 @@ class HomePage extends React.Component {
           }
         )
       })
+      .catch((error) => {
+        console.log('ERROR: ' + JSON.stringify(error))
+        this.setState({
+          isApiError: true
+        })
+      })
   }
 
   // Remove images (reset state) when there is a change in breed selection
@@ -179,7 +204,8 @@ class HomePage extends React.Component {
       currentPage: 1,
       currentPics: [],
       allCatsLoadad: false,
-      fetchedPics: []
+      fetchedPics: [],
+      isApiError: false
     })
   }
 
@@ -189,7 +215,8 @@ class HomePage extends React.Component {
       allCatsLoadad,
       catBreedPics,
       currentBreed,
-      isLoading
+      isLoading,
+      isApiError
     } = this.state
 
     console.log('catBreeds: ' + JSON.stringify(catBreeds))
@@ -209,7 +236,7 @@ class HomePage extends React.Component {
             <h4>Breed</h4>
             <Form>
                 <Form.Group controlId="exampleForm.SelectCustom">
-                    <Form.Control style={buttonStyle} as="select" value={currentBreed || ''} custom onChange={(e, value) => this.handleChange(e, value)}>
+                    <Form.Control style={buttonStyle} as="select" value={currentBreed || ''} custom onChange={(e, value) => this.handleChange(e, value)} disabled={!(catBreeds.length > 0)}>
                         <option key="breed" >Select Breed</option>
                         {catBreeds.map((breed) => (
                             <option key={breed.id} value={breed.id}>{breed.name}</option>
@@ -224,7 +251,8 @@ class HomePage extends React.Component {
         )
       })}
     </CardDeck>
-    { catBreedPics.length === 0 && (<h5>No Cats Available</h5>)}
+    { catBreedPics.length === 0 && !isApiError && (<h5>No Cats Available</h5>)}
+    {isApiError && (<h5>So sorry, there was a problem calling the cats. RAWR! </h5>)}
 
         { !allCatsLoadad && (<LoadingButton isCatLoading={isLoading } noCats={catBreedPics.length === 0} getCats={this.getMoreCats} />) }
 
