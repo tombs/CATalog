@@ -240,8 +240,9 @@ class HomePage extends React.Component {
 
     return (
           <Container>
-              <div className="row text-center">
-                <div className="col-md-4">
+            <br/>
+              <div className="row text-left">
+                <div className="col-md-3">
                   <h1>CAT-alogue</h1>
                 </div>
                 <div className="col-md-2">
