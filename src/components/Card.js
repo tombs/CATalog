@@ -9,6 +9,9 @@ const sampleStyle = {
   marginBottom: '20px'
 }
 
+/**
+ *  This is the CatCard component.  It displays a returned cat picture. It is a class component
+ */
 class CatCard extends React.Component {
   constructor (props) {
     super(props)

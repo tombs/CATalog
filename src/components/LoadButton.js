@@ -2,6 +2,11 @@ import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import Button from 'react-bootstrap/Button'
 
+/**
+ * LoadingButton component. This is the "Load More" button in HomePage. It is  functional component.
+ * @param {*} props
+ *
+ */
 function LoadingButton (props) {
   const [isLoading, setLoading] = useState(false)
 
