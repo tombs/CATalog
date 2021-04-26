@@ -48,6 +48,7 @@ class DetailsPage extends React.Component {
 
     return (
                 <Container>
+                  <br/>
 
                   <Card>
                     <Card.Header>
