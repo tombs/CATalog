@@ -20,6 +20,10 @@ const buttonStyle = {
   width: '20%'
 }
 
+/**
+ * This is the HomePage page componenet.  This displays our main page, with cat breeds selection
+ * and display of different cat pictures for each breed.
+ */
 class HomePage extends React.Component {
   constructor (props) {
     super(props)
