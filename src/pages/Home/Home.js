@@ -74,7 +74,6 @@ class HomePage extends React.Component {
     if (breedId) {
       getCatPicturesFromBreed(CAT_BREED_IMAGES_URL, currentPage, limitCount, breedId)
         .then(response => {
-          console.log('response: ' + JSON.stringify(response))
           this.setState(
             (state) => ({
               currentPage: state.currentPage + 1,
@@ -82,7 +81,7 @@ class HomePage extends React.Component {
               currentBreed: breedId
             }),
             () => {
-              console.log('CALLBACK!!!')
+              // Process all incoming cat pictures
               this.processCatPicID(response)
             }
           )
@@ -102,7 +101,6 @@ class HomePage extends React.Component {
   //  - New pictures are added to the current list of pictures
   //  - If no new pictures received (all are duplicates), remove "Load More" button (allCatsLoadad)
   processCatPicID (catPicList) {
-    console.log('PROCESSING CATS!')
     const {
       currentPics
     } = this.state
@@ -155,7 +153,6 @@ class HomePage extends React.Component {
     // Get more cats from the currently selected breed
     getCatPicturesFromBreed(CAT_BREED_IMAGES_URL, currentPage, limitCount, currentBreed)
       .then(response => {
-        console.log('response: ' + JSON.stringify(response))
         this.setState(
           (state) => ({
             currentPage: state.currentPage + 1,
@@ -163,7 +160,7 @@ class HomePage extends React.Component {
             isLoading: false
           }),
           () => {
-            console.log('CALLBACK!!! MORE CATS')
+            // process all incoming cat picturees
             this.processCatPicID(response)
           }
         )
@@ -184,8 +181,6 @@ class HomePage extends React.Component {
       limitCount
     } = this.state
 
-    console.log('EVENT: ' + event)
-    console.log('VALUE: ' + event.target.value)
     this.setState({
       currentBreed: event.target.value
     })
@@ -200,14 +195,13 @@ class HomePage extends React.Component {
     // Execute API to get all pictures from the selected breed
     getCatPicturesFromBreed(CAT_BREED_IMAGES_URL, currentPage, limitCount, event.target.value)
       .then(response => {
-        console.log('CHANGE response: ' + JSON.stringify(response))
         this.setState(
           (state) => ({
             currentPage: state.currentPage + 1,
             fetchedPics: response
           }),
           () => {
-            console.log('CALLBACK!!!')
+            // Process all incoming cat pictures
             this.processCatPicID(response)
           }
         )
@@ -244,8 +238,6 @@ class HomePage extends React.Component {
       isApiError
     } = this.state
 
-    console.log('catBreeds: ' + JSON.stringify(catBreeds))
-    console.log('catBreedPics: ' + JSON.stringify(catBreedPics))
     return (
           <Container>
             <h1>CAT-alogue</h1>
