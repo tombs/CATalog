@@ -1,52 +1,52 @@
-import React from 'react';
+import React from 'react'
+import PropTypes from 'prop-types'
 
 // Fetch data function (axios)
-import { getCatDetails } from 'scripts/dataFetch';
+import { getCatDetails } from 'scripts/dataFetch'
 
 // Constants
-import { CAT_DETAILS_URL } from 'apiConstants';
+import { CAT_DETAILS_URL } from 'apiConstants'
 
 // React Bootstrap Components
-import Container from 'react-bootstrap/Container';
+import Container from 'react-bootstrap/Container'
 import Card from 'react-bootstrap/Card'
 import Button from 'react-bootstrap/Button'
 
 class DetailsPage extends React.Component {
-        constructor(props) {
-            super(props);
-            this.state = {
-                catDetailsResponse: '',
-                catDetails: '',
-                backUrl: '',
-            };
-        
-          }
+  constructor (props) {
+    super(props)
+    this.state = {
+      catDetailsResponse: '',
+      catDetails: '',
+      backUrl: ''
+    }
+  }
 
-          componentDidMount() {
-            const  { catId } = this.props.match.params;
-            console.log("search: "+catId);            
-            
-            getCatDetails(CAT_DETAILS_URL, catId).then(response => {                
-                this.setState({
-                    catDetailsResponse: response,
-                    catDetails: response.breeds[0]
-                })
-              }
-        );
-          }
+  componentDidMount () {
+    const { catId } = this.props.match.params
+    console.log('search: ' + catId)
 
-          render() {
-            const {
-              catDetailsResponse,
-              catDetails
-            } = this.state;
+    getCatDetails(CAT_DETAILS_URL, catId).then(response => {
+      this.setState({
+        catDetailsResponse: response,
+        catDetails: response.breeds[0]
+      })
+    }
+    )
+  }
 
-              return (
+  render () {
+    const {
+      catDetailsResponse,
+      catDetails
+    } = this.state
+
+    return (
                 <Container>
-                  
+
                   <Card>
                     <Card.Header>
-                      <Button variant="primary" size="lg" href={'/?breed='+catDetails.id} active>
+                      <Button variant="primary" size="lg" href={'/?breed=' + catDetails.id} active>
                       Back
                       </Button>
                   </Card.Header>
@@ -58,10 +58,21 @@ class DetailsPage extends React.Component {
                       <Card.Text>{catDetails.description}</Card.Text>
                     </Card.Body>
                   </Card>
-                          
+
               </Container>
-              )                                
-          }
+    )
+  }
 }
 
-export default DetailsPage;
+// Props validation
+DetailsPage.propTypes = {
+
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      catId: PropTypes.string
+    })
+  })
+
+}
+
+export default DetailsPage
