@@ -1,24 +1,23 @@
-import { render } from '@testing-library/react';
-import React from 'react';
+import React from 'react'
+import PropTypes from 'prop-types'
 import Card from 'react-bootstrap/Card'
 import Button from 'react-bootstrap/Button'
 
 const sampleStyle = {
-    minWidth: "20%",
-    flexGrow: 0,
-    marginBottom: "20px"
-  };
+  minWidth: '20%',
+  flexGrow: 0,
+  marginBottom: '20px'
+}
 
 class CatCard extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-        };
-    
-      }
+  constructor (props) {
+    super(props)
+    this.state = {
+    }
+  }
 
-    render() {
-        return(            
+  render () {
+    return (
             <Card style={sampleStyle}>
             <Card.Img variant="top" src={this.props.picture} />
             <Card.Body>
@@ -27,12 +26,14 @@ class CatCard extends React.Component {
                 </Button>
             </Card.Body>
             </Card>
-        );
-
-    }
+    )
+  }
 }
 
-export default CatCard;
+// Props validation
+CatCard.propTypes = {
+  picture: PropTypes.string,
+  catId: PropTypes.string
+}
 
-    
-
+export default CatCard
