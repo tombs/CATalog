@@ -65,7 +65,7 @@ class HomePage extends React.Component {
           isApiError: true
         })
       })
-      
+
     // If breed ID is present in query parameters, call cat images from breed
     if (breedId) {
       getCatPicturesFromBreed(CAT_BREED_IMAGES_URL, currentPage, limitCount, breedId)
@@ -92,8 +92,8 @@ class HomePage extends React.Component {
     }
   }
 
-  // Function to process incoming cat pictures from list <catPicList>.  
-  // functions include: 
+  // Function to process incoming cat pictures from list <catPicList>.
+  // functions include:
   //  - Old pictures are ignored (API returnes duplicate pictures)
   //  - New pictures are added to the current list of pictures
   //  - If no new pictures received (all are duplicates), remove "Load More" button (allCatsLoadad)
